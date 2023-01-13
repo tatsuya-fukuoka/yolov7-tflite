@@ -19,3 +19,5 @@ python tflite_inference.py -i <image path>
 # vieo
 python tflite_inference.py --mo video -i <video path>
 ```
+## 4. About me
+BLOG: https://chantastu.hatenablog.com/archive
