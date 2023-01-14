@@ -21,7 +21,7 @@ def make_parser():
         "-m",
         "--model",
         type=str,
-        default="model/yolov7-tiny_float32.tflite",
+        default="model/yolov7_tiny_640x640_float32.tflite",
         help="Input your onnx model.",
     )
     parser.add_argument(
