@@ -1,10 +1,23 @@
 # yolov7-tflite
 Infer image and video with yolov7's tflite model
 
-## 1. pip install
+## 1. Dev env
+### 1.1 pip install
 ```bash
 pip install -U pip && pip install opencv-python tflite_runtime
 ```
+### 1.2 Docker
+Dockerfile
+```
+docker build -t tatsuya060504/yolov7-tflite:wsl2 .
+docker run -it --name=yolov7-tflite -v /home/<user>/yolov7-tflite:/home tatsuya060504/yolov7-tflite:wsl2
+```
+Dockerhub
+```bash
+docker pull tatsuya060504/yolov7-tflite:wsl2
+docker run -it --name=yolov7-tflite -v /home/<user>/yolov7-tflite:/home tatsuya060504/yolov7-tflite:wsl2
+```
+
 ## 2. tflite model download
 ```bash
 cd model
