@@ -52,6 +52,12 @@ def make_parser():
         default=None,
         help="extract a class",
     )
+    parser.add_argument(
+        "--frame_max",
+        type=int,
+        default=100,
+        help="Maximum number of frames to save in webcam.",
+    )
     return parser
 
 
@@ -111,6 +117,50 @@ def infer_video(args,yolov7):
     logging.info(f'Inference Finish!')
 
 
+def infer_webcam(args,yolov7):
+    cap = cv2.VideoCapture(int(args.input_path))
+    width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    fps = int(cap.get(cv2.CAP_PROP_FPS))
+    if fps == -1:
+        fps = 10
+    logging.info(f'width: {width}, height: {height}, fps: {fps}')
+
+    output_dir = args.output_dir
+    os.makedirs(output_dir, exist_ok=True)
+    save_path = os.path.join(output_dir,'webcam_reslut.mp4')
+
+    fourcc = cv2.VideoWriter_fourcc('m', 'p', '4', 'v')
+    writer = cv2.VideoWriter(
+        save_path, fourcc, fps, (width, height)
+        )
+
+    frame_id = 1
+    while frame_id < args.frame_max:
+        ret_val, img = cap.read()
+        if not ret_val:
+            break
+
+        start = time.time()
+        result_img = yolov7.inference(img)
+        logging.info(f'Infer time: {(time.time()-start)*1000:.2f} [ms]')
+
+        #cv2.imshow('windosw', result_img)
+        writer.write(result_img)
+
+        ch = cv2.waitKey(1)
+        if ch == 27 or ch == ord("q") or ch == ord("Q"):
+            break
+
+        frame_id+=1
+
+    writer.release()
+    cv2.destroyAllWindows()
+
+    logging.info(f'save_path: {save_path}')
+    logging.info(f'Inference Finish!')
+
+
 def main():
     args = make_parser().parse_args()
     logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s:%(name)s - %(message)s")
@@ -129,6 +179,8 @@ def main():
         infer_image(args,yolov7)
     elif args.mode == 'video':
         infer_video(args,yolov7)
+    elif args.mode == 'webcam':
+        infer_webcam(args,yolov7)
 
 if __name__ == "__main__": 
     main()
