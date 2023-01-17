@@ -29,7 +29,7 @@ sh download_yolov7_tiny_640x640_tflite.sh
 # image
 python tflite_inference.py -i <image path>
 
-# vieo
+# video
 python tflite_inference.py --mo video -i <video path>
 ```
 ## 4. About me
