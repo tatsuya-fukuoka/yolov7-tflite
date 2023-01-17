@@ -31,6 +31,9 @@ python tflite_inference.py -i <image path>
 
 # video
 python tflite_inference.py --mo video -i <video path>
+
+# Webcam
+python tflite_inference.py -mo webcam -i 0
 ```
 ## 4. About me
 BLOG: https://chantastu.hatenablog.com/archive
