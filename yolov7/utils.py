@@ -75,7 +75,7 @@ class Yolov7tflite(object):
         im = image.astype(np.float32)
         im /= 255
         im.shape
-        print(im.shape)
+        
         return im, ratio, dwdh
     
     def letterbox(self, im, new_shape=(640, 640), color=(114, 114, 114), auto=True, scaleup=True, stride=32):
@@ -108,7 +108,7 @@ class Yolov7tflite(object):
     
     def visual(self, img, outputs, ratio, dwdh):
         ori_images = [img.copy()]
-        
+        print(outputs)
         if self.extract is not None:
             extract_cls_i = COCO_CLASSES.index(self.extract)
             
