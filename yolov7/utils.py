@@ -75,7 +75,7 @@ class Yolov7tflite(object):
         im = image.astype(np.float32)
         im /= 255
         im.shape
-                
+        print(im.shape)
         return im, ratio, dwdh
     
     def letterbox(self, im, new_shape=(640, 640), color=(114, 114, 114), auto=True, scaleup=True, stride=32):
