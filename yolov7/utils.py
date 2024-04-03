@@ -6,10 +6,11 @@ from yolov7.coco_classes import COCO_CLASSES
 from yolov7.color_list import _COLORS
 
 
-class YOLOV7TFLite(object):
+class Yolov7tflite(object):
     def __init__(
         self,
         model_path,
+        img_size,
         num_of_threads = 2,
         class_score_th=0.3,
         nms_th=0.45,
@@ -17,6 +18,8 @@ class YOLOV7TFLite(object):
         with_p6=False,
         extract=None
     ):
+        
+        self.img_size = img_size
         # 閾値
         self.class_score_th = class_score_th
         self.nms_th = nms_th
@@ -65,7 +68,7 @@ class YOLOV7TFLite(object):
 
     def preproc(self,img):
         image = img.copy()
-        image, ratio, dwdh = self.letterbox(image, auto=False)
+        image, ratio, dwdh = self.letterbox(image, new_shape=self.img_size, auto=False)
         image = np.expand_dims(image, 0)
         image = np.ascontiguousarray(image)
 

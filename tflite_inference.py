@@ -5,7 +5,7 @@ import cv2
 import time
 import logging
 
-from  yolov7.utils import YOLOV7TFLite
+from  yolov7.utils import Yolov7tflite
 
 
 def make_parser():
@@ -30,6 +30,12 @@ def make_parser():
         type=str,
         default='horses.jpg',
         help="Path to your input image.",
+    )
+    parser.add_argument(
+        "--img_size",
+        type=int,
+        default=640,
+        help="Model input image size",
     )
     parser.add_argument(
         "-o",
@@ -165,8 +171,9 @@ def main():
     args = make_parser().parse_args()
     logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s:%(name)s - %(message)s")
     
-    yolov7 = YOLOV7TFLite(
+    yolov7 = Yolov7tflite(
         model_path =args.model,
+        img_size = args.img_size,
         num_of_threads=2,
         class_score_th=0.3,
         nms_th=0.45,
