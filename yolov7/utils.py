@@ -108,7 +108,7 @@ class Yolov7tflite(object):
     
     def visual(self, img, outputs, ratio, dwdh):
         ori_images = [img.copy()]
-        print(outputs)
+        
         if self.extract is not None:
             extract_cls_i = COCO_CLASSES.index(self.extract)
             
